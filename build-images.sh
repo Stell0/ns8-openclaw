@@ -39,7 +39,7 @@ buildah config --entrypoint=/ \
     --label="org.nethserver.authorizations=traefik@node:routeadm" \
     --label="org.nethserver.tcp-ports-demand=1" \
     --label="org.nethserver.rootfull=0" \
-    --label="org.nethserver.images=docker.io/jmalloc/echo-server:latest" \
+    --label="org.nethserver.images=docker.io/alpine/openclaw:latest" \
     "${container}"
 # Commit the image
 buildah commit "${container}" "${repobase}/${reponame}"
@@ -47,15 +47,19 @@ buildah commit "${container}" "${repobase}/${reponame}"
 # Append the image URL to the images array
 images+=("${repobase}/${reponame}")
 
-#
-# NOTICE:
-#
-# It is possible to build and publish multiple images.
-#
-# 1. create another buildah container
-# 2. add things to it and commit it
-# 3. append the image url to the images array
-#
+##########################
+##      OpenClaw      ##
+##########################
+echo "[*] Build OpenClaw container"
+reponame="openclaw"
+pushd openclaw
+buildah build --force-rm --no-cache --jobs "$(nproc)" \
+	--tag "${repobase}/${reponame}" \
+	--tag "${repobase}/${reponame}:${IMAGETAG:-latest}"
+popd
+
+# Append the image URL to the images array
+images+=("${repobase}/${reponame}")
 
 #
 # Setup CI when pushing to Github. 

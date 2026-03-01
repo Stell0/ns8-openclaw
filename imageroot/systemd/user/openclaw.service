@@ -1,0 +1,42 @@
+#
+# Copyright (C) 2023 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+#
+# This systemd unit starts an OpenClaw instance using Podman.
+# Most parts of this file come from podman-generate-systemd.
+#
+[Unit]
+Description=OpenClaw
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+EnvironmentFile=%S/state/environment
+WorkingDirectory=%S/state
+Restart=always
+ExecStartPre=/bin/rm -f %t/openclaw.pid %t/openclaw.ctr-id
+ExecStartPre=-runagent discover-smarthost
+ExecStartPre=/usr/bin/mkdir -p %S/state/openclaw/workspace
+ExecStart=/usr/bin/podman run \
+    --detach \
+    --conmon-pidfile=%t/openclaw.pid \
+    --cidfile=%t/openclaw.ctr-id \
+    --cgroups=no-conmon \
+    --init \
+    --replace --name=%N \
+    --publish=127.0.0.1:${TCP_PORT}:18789 \
+    --volume=%S/state/openclaw:/home/node/.openclaw:rw \
+    --volume=%S/state/openclaw/workspace:/home/node/.openclaw/workspace:rw \
+    --env=HOME=/home/node \
+    --env=TERM=xterm-256color \
+    --env-file=smarthost.env \
+    ${OPENCLAW_IMAGE} \
+    node dist/index.js gateway --bind lan --port 18789
+ExecStop=/usr/bin/podman stop --ignore --cidfile %t/openclaw.ctr-id -t 10
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/openclaw.ctr-id
+PIDFile=%t/openclaw.pid
+Type=forking
+
+[Install]
+WantedBy=default.target
