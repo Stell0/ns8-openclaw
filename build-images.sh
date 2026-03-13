@@ -13,7 +13,7 @@ images=()
 # The image will be pushed to GitHub container registry
 repobase="${REPOBASE:-ghcr.io/nethserver}"
 # Configure the image name
-reponame="ns8-openclaw"
+reponame="openclaw"
 
 # Create a new empty container image
 container=$(buildah from scratch)
