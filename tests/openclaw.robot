@@ -8,6 +8,7 @@ Check if openclaw is installed correctly
     Should Be Equal As Integers    ${rc}  0
     &{output} =    Evaluate    ${output}
     Set Suite Variable    ${module_id}    ${output.module_id}
+    Should Start With    ${module_id}    openclaw
 
 Check if openclaw can be configured
     ${rc} =    Execute Command    api-cli run module/${module_id}/configure-module --data '{}'

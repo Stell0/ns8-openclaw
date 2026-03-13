@@ -12,7 +12,9 @@ set -e
 images=()
 # The image will be pushed to GitHub container registry
 repobase="${REPOBASE:-ghcr.io/nethserver}"
-# Configure the image name
+# Configure the module image name. Keep the NS8 module image distinct from the
+# runtime service image, otherwise the later service build overwrites the
+# installable module image and breaks `extract-ui`.
 reponame="openclaw"
 
 # Create a new empty container image
@@ -39,7 +41,7 @@ buildah config --entrypoint=/ \
     --label="org.nethserver.authorizations=traefik@node:routeadm" \
     --label="org.nethserver.tcp-ports-demand=1" \
     --label="org.nethserver.rootfull=0" \
-    --label="org.nethserver.images=${repobase}/openclaw:${IMAGETAG:-latest}" \
+    --label="org.nethserver.images=${repobase}/openclaw-runtime:${IMAGETAG:-latest}" \
     "${container}"
 # Commit the image in Docker format for broader Podman compatibility on NS8 nodes
 buildah commit --format docker "${container}" "${repobase}/${reponame}"
@@ -52,7 +54,7 @@ images+=("${repobase}/${reponame}")
 ##      OpenClaw      ##
 ##########################
 echo "[*] Build OpenClaw container"
-reponame="openclaw"
+reponame="openclaw-runtime"
 pushd openclaw
 buildah build --force-rm --no-cache --jobs "$(nproc)" \
 	--tag "${repobase}/${reponame}" \

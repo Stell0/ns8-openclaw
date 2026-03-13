@@ -15,5 +15,5 @@
     "bug_url": "https://github.com/stell0/ns8-openclaw/issues",
     "code_url": "https://github.com/stell0/ns8-openclaw"
   },
-  "source": "ghcr.io/stell0/ns8-openclaw"
+  "source": "ghcr.io/stell0/openclaw"
 }
