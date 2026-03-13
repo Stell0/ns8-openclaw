@@ -32,7 +32,7 @@ ExecStart=/usr/bin/podman run \
     --env=TERM=xterm-256color \
     --env-file=smarthost.env \
     ${OPENCLAW_RUNTIME_IMAGE} \
-    node dist/index.js gateway --bind lan --port 18789
+    node dist/index.js gateway --bind lan --port 18789 --allow-unconfigured
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/openclaw.ctr-id -t 10
 ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/openclaw.ctr-id
 PIDFile=%t/openclaw.pid

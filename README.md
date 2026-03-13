@@ -29,6 +29,9 @@ The above command will:
 - (describe configuration process)
 - ...
 
+The service is started with `--allow-unconfigured` so the gateway can come up
+before the initial OpenClaw setup is completed.
+
 Send a test HTTP request to the openclaw backend service:
 
     curl http://127.0.0.1/openclaw/
