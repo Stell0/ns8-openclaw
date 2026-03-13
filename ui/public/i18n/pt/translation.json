@@ -36,7 +36,13 @@
         "title": "Status",
         "installation_node": "Installation node",
         "node": "Node",
-        "no_volumes": "No volumes"
+        "no_volumes": "No volumes",
+        "openclaw_diagnostics": "OpenClaw diagnostics",
+        "doctor_command": "Doctor",
+        "status_command": "Status",
+        "dashboard_command": "Dashboard",
+        "command_ok": "OK",
+        "command_failed": "Failed"
     },
     "about": {
         "title": "About"

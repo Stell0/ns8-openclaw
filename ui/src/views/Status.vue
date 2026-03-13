@@ -105,6 +105,47 @@
         />
       </cv-column>
     </cv-row>
+    <cv-row>
+      <cv-column class="page-subtitle">
+        <h4>{{ $t("status.openclaw_diagnostics") }}</h4>
+      </cv-column>
+    </cv-row>
+    <cv-row v-if="!loading.getStatus">
+      <cv-column
+        v-for="(diagnostic, key) in status.diagnostics"
+        :key="key"
+        :md="4"
+        :max="4"
+      >
+        <cv-tile light class="diagnostic-tile min-height-card">
+          <div class="diagnostic-header">
+            <h5>{{ $t(`status.${key}_command`) }}</h5>
+            <span
+              class="diagnostic-state"
+              :class="diagnostic.success ? 'is-success' : 'is-error'"
+            >
+              {{
+                diagnostic.success
+                  ? $t("status.command_ok")
+                  : $t("status.command_failed")
+              }}
+            </span>
+          </div>
+          <p class="diagnostic-command">{{ diagnostic.command }}</p>
+          <pre class="diagnostic-output">{{ diagnostic.output }}</pre>
+        </cv-tile>
+      </cv-column>
+    </cv-row>
+    <cv-row v-else>
+      <cv-column :md="4" :max="4">
+        <cv-tile light>
+          <cv-skeleton-text
+            :paragraph="true"
+            :line-count="6"
+          ></cv-skeleton-text>
+        </cv-tile>
+      </cv-column>
+    </cv-row>
     <!-- services -->
     <cv-row>
       <cv-column class="page-subtitle">
@@ -290,6 +331,23 @@ export default {
         services: [],
         images: [],
         volumes: [],
+        diagnostics: {
+          doctor: {
+            command: "openclaw doctor",
+            success: true,
+            output: "",
+          },
+          status: {
+            command: "openclaw status",
+            success: true,
+            output: "",
+          },
+          dashboard: {
+            command: "openclaw dashboard",
+            success: true,
+            output: "",
+          },
+        },
       },
       backupRepositories: [],
       backups: [],
@@ -515,5 +573,58 @@ export default {
 .break-word {
   word-wrap: break-word;
   max-width: 30vw;
+}
+
+.diagnostic-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.diagnostic-header {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+
+.diagnostic-header h5 {
+  margin: 0;
+}
+
+.diagnostic-command {
+  color: $text-secondary;
+  font-family: monospace;
+  margin: 0;
+}
+
+.diagnostic-state {
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  white-space: nowrap;
+}
+
+.diagnostic-state.is-success {
+  background: #d9f2e6;
+  color: #0f5132;
+}
+
+.diagnostic-state.is-error {
+  background: #ffd7d9;
+  color: #a2191f;
+}
+
+.diagnostic-output {
+  background: $ui-01;
+  font-family: monospace;
+  font-size: 0.85rem;
+  margin: 0;
+  max-height: 20rem;
+  overflow: auto;
+  padding: 0.75rem;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 </style>

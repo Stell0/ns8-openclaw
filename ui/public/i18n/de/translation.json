@@ -36,7 +36,13 @@
         "title": "Status",
         "installation_node": "Knoten der Installation",
         "node": "Knoten",
-        "no_volumes": "Keine Volumen"
+        "no_volumes": "Keine Volumen",
+        "openclaw_diagnostics": "OpenClaw diagnostics",
+        "doctor_command": "Doctor",
+        "status_command": "Status",
+        "dashboard_command": "Dashboard",
+        "command_ok": "OK",
+        "command_failed": "Failed"
     },
     "about": {
         "title": "Über"
