@@ -1,7 +1,7 @@
 {
-  "name": "kickstart",
+  "name": "openclaw",
   "description": {
-    "en": "My kickstart module"
+    "en": "OpenClaw module"
   },
   "categories": [],
   "authors": [
@@ -11,9 +11,9 @@
     }
   ],
   "docs": {
-    "documentation_url": "https://docs.kickstart.com/",
-    "bug_url": "https://github.com/NethServer/dev",
-    "code_url": "https://github.com/author/ns8-kickstart"
+    "documentation_url": "https://github.com/stell0/ns8-openclaw",
+    "bug_url": "https://github.com/stell0/ns8-openclaw/issues",
+    "code_url": "https://github.com/stell0/ns8-openclaw"
   },
-  "source": "ghcr.io/nethserver/kickstart"
+  "source": "ghcr.io/stell0/ns8-openclaw"
 }

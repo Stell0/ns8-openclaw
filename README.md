@@ -4,12 +4,12 @@
 
 Instantiate the module with:
 
-    add-module ghcr.io/Stell0/ns8-openclaw:latest 1
+    add-module ghcr.io/stell0/ns8-openclaw:latest 1
 
 The output of the command will return the instance name.
 Output example:
 
-    {"module_id": "openclaw1", "image_name": "openclaw", "image_url": "ghcr.io/Stell0/ns8-openclaw:latest"}
+    {"module_id": "openclaw1", "image_name": "ns8-openclaw", "image_url": "ghcr.io/stell0/ns8-openclaw:latest"}
 
 ## Configure
 
@@ -63,7 +63,7 @@ To uninstall the instance:
 Test the module using the `test-module.sh` script:
 
 
-    ./test-module.sh <NODE_ADDR> ghcr.io/nethserver/kickstart:latest
+    ./test-module.sh <NODE_ADDR> ghcr.io/nethserver/ns8-openclaw:latest
 
 The tests are made using [Robot Framework](https://robotframework.org/)
 
